@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Weather</title>
+<script>
+	function fetchWeather() {
+		navigator.geolocation.getCurrentPosition(function(position){
+			var lat = position.coords.latitude;
+			var lon = postion.coords.longitude;
+			//var lat=25;
+			//var lon=27;
+			var url = 'https://apiopenweathermap.org/data/2.5/weather?lat=' +lat+ '&lon' + lon + '&appid=138b91f7502c917df454a94449df5c18';
+			const oReq = new XMLHttpRequest();
+			oReq.onLoad=function(e) {
+				//alert(oReq.response)
+				var data = JSON.parse(oReq.response);
+				document.getElementById("result").innerHTML=data.weather[0].main;
+				document.getElementById("result").innerHTML=data.main.temp - 273.15;
+			}
+			oReq.open("GET",url);
+			oReq.send();
+		});	
+		
+		/*var position='';
+		var x = document.getElementById("result");
+		
+		if (navigator.geolocation) {
+			position=navigator.geolocation.getCurrentPosition();
+			alert(position);
+		} else {
+			x.innerHTML = "Geolocation is not supported by this browser.";
+			return false;
+		}
+		//var lat = position.coords.latitude;
+		//var lon = postion.coords.longitude;
+		var lat=25;
+		var lon=27;
+		var url = 'https://apiopenweathermap.org/data/2.5/weather?lat=' +lat+ '&lon' + lon + '&appid=138b91f7502c917df454a94449df5c18';
+		const oReq = new XMLHttpRequest();
+		oReq.onLoad=function(e) {
+			alert(oReq.response)
+			var data = JSON.parse(oReq.response);
+	}
+
+	function showPosition(position) {
+		x.innerHTML = "Latitude: " + position.coords.latitude
+				+ "<br>Longitude: " + position.coords.longitude;
+	}*/
+	}
+</script>
+</head>
+<body>
+	<button onclick="fetchWeather()">Click here</button> to fetch the weather in your city..
+	<div id="result"></div>
+</body>
+</html>
